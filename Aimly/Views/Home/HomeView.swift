@@ -5,60 +5,62 @@ struct HomeView: View {
     @ObservedObject var viewModel = HomeViewModel()
     
     var body: some View {
-        ZStack {
-            Color.background.ignoresSafeArea()
-            
-            VStack {
-                HStack {
-                    Text(formattedCurrentDate())
-                        .font(.custom("Nunito-Bold", size: 16))
-                    Spacer()
-                }
-                .padding(.top)
-                HStack(spacing: 0) {
-                    Text("Hello, ")
-                        .font(.custom("Nunito-Semibold", size: 28))
-                    Text("Susy!")
-                        .foregroundStyle(.myOrange)
-                        .font(.custom("Nunito-Bold", size: 28))
+        NavigationStack {
+            ZStack {
+                Color.background.ignoresSafeArea()
+                
+                VStack {
+                    HStack {
+                        Text(formattedCurrentDate())
+                            .font(.custom("Nunito-Bold", size: 16))
+                        Spacer()
+                    }
+                    .padding(.top)
+                    HStack(spacing: 0) {
+                        Text("Hello, ")
+                            .font(.custom("Nunito-Semibold", size: 28))
+                        Text("Susy!")
+                            .foregroundStyle(.myOrange)
+                            .font(.custom("Nunito-Bold", size: 28))
+                        
+                        Spacer()
+                    }
                     
-                    Spacer()
+                    ScrollView {
+                        if !viewModel.habits.isEmpty {
+                            // MARK: - Habits
+                            yourHabits
+                            
+                            // MARK: - Goals
+                            yourGoals
+                                .padding(.bottom, UIScreen.main.bounds.width * 0.15)
+                        }
+                    }
+                    .background {
+                        Color.background
+                    }
+                }
+                .frame(width: UIScreen.main.bounds.width * 0.9)
+                
+                if viewModel.showAddHabit {
+                    addHabit
                 }
                 
-                ScrollView {
-                    if !viewModel.habits.isEmpty {
-                        // MARK: - Habits
-                        yourHabits
-                        
-                        // MARK: - Goals
-                        yourGoals
-                            .padding(.bottom, UIScreen.main.bounds.width * 0.15)
-                    }
+                Button {
+                    viewModel.showAddHabit = true
+                } label: {
+                    Image(systemName: "plus.circle")
+                        .resizable()
+                        .scaledToFit()
+                        .foregroundColor(.white.opacity(0.8))
+                        .background {
+                            Circle()
+                                .fill(LinearGradient(gradient: Gradient(colors: [.gradient1, .primaryy]), startPoint: .bottomLeading, endPoint: .topTrailing))
+                        }
                 }
-                .background {
-                    Color.background
-                }
+                .frame(width: UIScreen.main.bounds.width * 0.15)
+                .position(x: UIScreen.main.bounds.width * 0.85, y: UIScreen.main.bounds.height * 0.85)
             }
-            .frame(width: UIScreen.main.bounds.width * 0.9)
-            
-            if viewModel.showAddHabit {
-                addHabit
-            }
-            
-            Button {
-                viewModel.showAddHabit = true
-            } label: {
-                Image(systemName: "plus.circle")
-                    .resizable()
-                    .scaledToFit()
-                    .foregroundColor(.white.opacity(0.8))
-                    .background {
-                        Circle()
-                            .fill(LinearGradient(gradient: Gradient(colors: [.gradient1, .primaryy]), startPoint: .bottomLeading, endPoint: .topTrailing))
-                    }
-            }
-            .frame(width: UIScreen.main.bounds.width * 0.15)
-            .position(x: UIScreen.main.bounds.width * 0.85, y: UIScreen.main.bounds.height * 0.85)
         }
     }
     
@@ -74,9 +76,13 @@ struct HomeView: View {
                     
                     Spacer()
                     
-                    Text("See all")
-                        .font(.custom("Nunito-Bold", size: 14))
-                        .foregroundStyle(LinearGradient(gradient: Gradient(colors: [.gradient1, .gradient2]), startPoint: .bottomLeading, endPoint: .topTrailing))
+                    NavigationLink {
+                        YourHabitsView()
+                    } label: {
+                        Text("See all")
+                            .font(.custom("Nunito-Bold", size: 14))
+                            .foregroundStyle(LinearGradient(gradient: Gradient(colors: [.gradient1, .gradient2]), startPoint: .bottomLeading, endPoint: .topTrailing))
+                    }
                 }
                 .padding(.top)
                 
@@ -135,7 +141,7 @@ struct HomeView: View {
             }
             .padding()
         }
-        .frame(height: UIScreen.main.bounds.height * 0.407044335)
+        .frame(maxHeight: UIScreen.main.bounds.height * 0.407044335)
     }
     
     var yourGoals: some View {
@@ -217,7 +223,7 @@ struct HomeView: View {
             }
             .padding()
         }
-        .frame(height: UIScreen.main.bounds.height * 0.447044335)
+        .frame(maxHeight: UIScreen.main.bounds.height * 0.62)
     }
     
     var addHabit: some View {

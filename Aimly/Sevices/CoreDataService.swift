@@ -39,6 +39,7 @@ class CoreDataService {
         newHabit.goal = title
         newHabit.period = period
         newHabit.habitType = habitType
+        newHabit.createdAt = Date()
         newHabit.completedDays = completedDays as NSObject
         
         saveContext()

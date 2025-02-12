@@ -1,11 +1,14 @@
 import SwiftUI
 import Foundation
+import CoreData
 
 class HomeViewModel: ObservableObject {
     @Published var showMenu: Bool = false
     @Published var showAddHabit: Bool = false
     @Published var habits: [HabitEntity] = []
+    @Published var habitsByDate: [HabitEntity] = []
     
+    @Published var selectedDate: Date = Date()
     @Published var goal: String = ""
     @Published var name: String = ""
     @Published var selectedPeriod: PeriodOption? = periods.first
@@ -13,6 +16,7 @@ class HomeViewModel: ObservableObject {
     
     init() {
         fetchHabits()
+        getHabitsByDate(for: Date())
     }
     
     func addHabit() {
@@ -23,6 +27,7 @@ class HomeViewModel: ObservableObject {
     
     func fetchHabits() {
         habits = CoreDataService.shared.fetchHabits()
+        print(habits)
     }
     
     func deleteHabit(_ habit: HabitEntity) {
@@ -38,6 +43,21 @@ class HomeViewModel: ObservableObject {
     func getCountOfCompletedDays(for habit: HabitEntity) -> Int {
         let completedDaysCount = habit.completedDays as? [String: Bool] ?? [:]
         return completedDaysCount.filter { $0.value }.count
+    }
+    
+    func getHabitsByDate(for selectedDate: Date)  {
+        let calendar = Calendar.current
+        
+        habitsByDate = habits.filter { habit in
+            guard let createdAt = habit.createdAt else {return false}
+            print("Created at - \(createdAt)")
+            
+            guard let endDate = calendar.date(byAdding: .day, value: Int(habit.period), to: createdAt) else {return false}
+            print("End date - \(endDate)")
+            
+            return selectedDate >= createdAt && selectedDate <= endDate
+        }
+        print(habitsByDate)
     }
     
     func completeDay(for habit: HabitEntity) {
