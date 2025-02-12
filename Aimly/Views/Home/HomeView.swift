@@ -4,14 +4,6 @@ struct HomeView: View {
     
     @ObservedObject var viewModel = HomeViewModel()
     
-    @State private var progress: Double = 5.0 / 7.0 // Например, 5 из 7
-    
-    @State var habits: [HabitMock] = [
-        HabitMock(title: "Meditating", yourGoal: "Sleep before 11 pm", isDone: true, period: 7, habitType: "Everyday", daysIsDone: 5),
-        HabitMock(title: "Read philosophy", yourGoal: "Finish 5 philosophy books", isDone: true, period: 7, habitType: "Everyday", daysIsDone: 5),
-        HabitMock(title: "Journaling", yourGoal: "Finish read the Hobbits", isDone: false, period: 7, habitType: "Everyday", daysIsDone: 5)
-    ]
-    
     var body: some View {
         ZStack {
             Color.background.ignoresSafeArea()
