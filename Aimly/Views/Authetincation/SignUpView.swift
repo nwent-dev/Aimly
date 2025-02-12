@@ -6,6 +6,7 @@ struct SignUpView: View {
     @State private var email: String = ""
     @State private var password: String = ""
     @State private var passwordConfirmation: String = ""
+    @State private var errorMessage: String = ""
     
     var body: some View {
         NavigationStack {
@@ -50,9 +51,9 @@ struct SignUpView: View {
                     
                     ButtonView(text: "Sign Up") {
                         print("Sign Up")
+                        
+                        Spacer()
                     }
-                    
-                    Spacer()
                 }
                 .frame(maxWidth: UIScreen.main.bounds.width * 0.87)
             }

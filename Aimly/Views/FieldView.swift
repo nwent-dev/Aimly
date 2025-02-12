@@ -10,7 +10,7 @@ struct FieldView: View {
             HStack {
                 Text(title)
                     .multilineTextAlignment(.leading)
-                    .foregroundStyle(.secondText)
+                    .foregroundStyle(.mainText)
                 
                 Spacer()
             }
@@ -22,6 +22,7 @@ struct FieldView: View {
                     RoundedRectangle(cornerRadius: 4)
                         .stroke(Color.stroke, lineWidth: 2)
                 }
+                .background(Color.white)
         }
         
     }

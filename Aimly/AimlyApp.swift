@@ -1,17 +1,13 @@
-//
-//  AimlyApp.swift
-//  Aimly
-//
-//  Created by Александр Калашников on 08.02.2025.
-//
-
 import SwiftUI
 
 @main
 struct AimlyApp: App {
+    let coreDataService: CoreDataService = CoreDataService.shared
+    
     var body: some Scene {
         WindowGroup {
-            SignUpView()
+            HomeView()
+                .environment(\.managedObjectContext, coreDataService.context)
         }
     }
 }
