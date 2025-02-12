@@ -30,6 +30,16 @@ class HomeViewModel: ObservableObject {
         fetchHabits()
     }
     
+    func getProgress(for habit: HabitEntity) -> Double {
+        let completedDaysCount = habit.completedDays as? [String: Bool] ?? [:]
+        return Double(getCountOfCompletedDays(for: habit)) / Double(habit.period)
+    }
+    
+    func getCountOfCompletedDays(for habit: HabitEntity) -> Int {
+        let completedDaysCount = habit.completedDays as? [String: Bool] ?? [:]
+        return completedDaysCount.filter { $0.value }.count
+    }
+    
     func completeDay(for habit: HabitEntity) {
         let today = stringFromDate(Date()) // Получаем текущую дату в виде строки
 

@@ -185,7 +185,7 @@ struct HomeView: View {
                                     }
                                     
                                     Button {
-                                        
+                                        viewModel.deleteHabit(viewModel.habits[index])
                                     } label: {
                                         Text("Delete")
                                     }
@@ -199,17 +199,17 @@ struct HomeView: View {
                                 .frame(width: UIScreen.main.bounds.width * 0.04, height: UIScreen.main.bounds.width * 0.04)
                             }
                             
-                            CustomProgressBar(progress: progress)
+                            CustomProgressBar(progress: viewModel.getProgress(for: viewModel.habits[index]))
                             
                             HStack {
-                                Text("\(habits[index].daysIsDone) from \(habits[index].period) days target")
+                                Text("\(viewModel.getCountOfCompletedDays(for: viewModel.habits[index])) from \(viewModel.habits[index].period) days target")
                                     .font(.custom("Nunito-Medium", size: 14))
                                 
                                 Spacer()
                             }
                             
                             HStack {
-                                Text(habits[index].habitType)
+                                Text(viewModel.habits[index].habitType ?? "")
                                     .font(.custom("Nunito-Medium", size: 14))
                                     .foregroundStyle(LinearGradient(gradient: Gradient(colors: [.gradient1, .gradient2]), startPoint: .bottomLeading, endPoint: .topTrailing))
                                 Spacer()
