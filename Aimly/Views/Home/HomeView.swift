@@ -59,7 +59,7 @@ struct HomeView: View {
                         }
                 }
                 .frame(width: UIScreen.main.bounds.width * 0.15)
-                .position(x: UIScreen.main.bounds.width * 0.85, y: UIScreen.main.bounds.height * 0.85)
+                .position(x: UIScreen.main.bounds.width * 0.85, y: UIScreen.main.bounds.height * 0.78)
             }
         }
     }
@@ -156,9 +156,13 @@ struct HomeView: View {
                     
                     Spacer()
                     
-                    Text("See all")
-                        .font(.custom("Nunito-Bold", size: 14))
-                        .foregroundStyle(LinearGradient(gradient: Gradient(colors: [.gradient1, .gradient2]), startPoint: .bottomLeading, endPoint: .topTrailing))
+                    NavigationLink {
+                        YourGoalView()
+                    } label: {
+                        Text("See all")
+                            .font(.custom("Nunito-Bold", size: 14))
+                            .foregroundStyle(LinearGradient(gradient: Gradient(colors: [.gradient1, .gradient2]), startPoint: .bottomLeading, endPoint: .topTrailing))
+                    }
                 }
                 .padding(.top)
                 
